@@ -1,5 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
+import morgan from 'morgan';
 import { dbConnection } from './DB/dataBase.js';
 import testRoutes from './routes/test.routes.js';
 
@@ -9,6 +11,11 @@ dotenv.config({
 
 //rest object
 const app = express();
+
+//middelWare
+app.use(express.json());
+app.use(cors());
+app.use(morgan("dev")); //after run console ma method bhako show garchha
 
 app.use('/api/v1/test',testRoutes);
 
