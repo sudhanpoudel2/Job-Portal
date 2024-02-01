@@ -1,15 +1,13 @@
 import { User } from "../models/userModel.js";
 
-export const registerController = async (req, res) => {
+export const registerController = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
     //validation
 
     if (!name) {
-      return res
-        .status(400)
-        .send({ success: false, message: "please provide name" });
+      next("name is required"); // yo garda sajilo hunchha dherai
     }
     if (!email) {
       return res
@@ -37,11 +35,6 @@ export const registerController = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.log(error);
-    res.status(400).send({
-      message: "Error in register controller",
-      success: false,
-      error,
-    });
+    next(error);
   }
 };
