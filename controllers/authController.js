@@ -29,10 +29,16 @@ export const registerController = async (req, res, next) => {
     }
 
     const user = await User.create({ name, email, password });
+
+    //token auth
+
+    const token = user.createJwt();
+
     return res.status(201).send({
       success: true,
       message: "User created sucessfully",
       user,
+      token,
     });
   } catch (error) {
     next(error);

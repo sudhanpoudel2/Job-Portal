@@ -1,7 +1,12 @@
 import mongoose, { Schema } from "mongoose";
-import validator from "validator";
+import validator, { isJWT } from "validator";
 import bcrypt from "bcryptjs";
-import { Jwt } from "jsonwebtoken";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+
+dotenv.config({
+  path: "",
+});
 
 const userSchema = new Schema(
   {
@@ -38,9 +43,10 @@ userSchema.pre("save", async function () {
 });
 
 //jwt
-
-userSchema.methods.createJWT = function () {
-  return JWT.sign({});
+userSchema.methods.createJwt = function () {
+  return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
+    expiresIn: "1d",
+  });
 };
 
 export const User = mongoose.model("User", userSchema);
