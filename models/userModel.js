@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import validator, { isJWT } from "validator";
+import validator from "validator";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
